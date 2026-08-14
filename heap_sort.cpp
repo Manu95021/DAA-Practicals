@@ -1,7 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <cstdlib>
-#include <ctime>
 #include <chrono>
 #include <algorithm>
 
@@ -26,7 +24,7 @@ void maxHeapify(vector<int> &arr, int n, int i)
             break;
 
         swap(arr[i], arr[largest]);
-        i = largest; // Move down the tree
+        i = largest;
     }
 }
 
@@ -34,18 +32,15 @@ void maxHeapSort(vector<int> &arr)
 {
     int n = arr.size();
 
-    
     for (int i = n / 2 - 1; i >= 0; i--)
         maxHeapify(arr, n, i);
 
-    
     for (int i = n - 1; i > 0; i--)
     {
         swap(arr[0], arr[i]);
         maxHeapify(arr, i, 0);
     }
 }
-
 
 void minHeapify(vector<int> &arr, int n, int i)
 {
@@ -65,7 +60,7 @@ void minHeapify(vector<int> &arr, int n, int i)
             break;
 
         swap(arr[i], arr[smallest]);
-        i = smallest; // Move down the tree
+        i = smallest;
     }
 }
 
@@ -73,7 +68,6 @@ void minHeapSort(vector<int> &arr)
 {
     int n = arr.size();
 
-    
     for (int i = n / 2 - 1; i >= 0; i--)
         minHeapify(arr, n, i);
 
@@ -83,10 +77,8 @@ void minHeapSort(vector<int> &arr)
         minHeapify(arr, i, 0);
     }
 
-
     reverse(arr.begin(), arr.end());
 }
-
 
 int main()
 {
@@ -96,10 +88,13 @@ int main()
     cin >> n;
 
     vector<int> original(n);
-    srand(time(0));
+
+    cout << "Enter " << n << " elements:\n";
 
     for (int i = 0; i < n; i++)
-        original[i] = rand() % 100000;
+    {
+        cin >> original[i];
+    }
 
     vector<int> maxHeapArray = original;
     vector<int> minHeapArray = original;
@@ -108,25 +103,39 @@ int main()
     maxHeapSort(maxHeapArray);
     auto endMax = high_resolution_clock::now();
 
-
     auto startMin = high_resolution_clock::now();
     minHeapSort(minHeapArray);
     auto endMin = high_resolution_clock::now();
 
+    long long nanoMax =
+        duration_cast<nanoseconds>(endMax - startMax).count();
 
-    long long nanoMax = duration_cast<nanoseconds>(endMax - startMax).count();
-    long long microMax = duration_cast<microseconds>(endMax - startMax).count();
+    long long microMax =
+        duration_cast<microseconds>(endMax - startMax).count();
 
-    long long nanoMin = duration_cast<nanoseconds>(endMin - startMin).count();
-    long long microMin = duration_cast<microseconds>(endMin - startMin).count();
+    long long nanoMin =
+        duration_cast<nanoseconds>(endMin - startMin).count();
+
+    long long microMin =
+        duration_cast<microseconds>(endMin - startMin).count();
 
     cout << "\n========== MAX HEAP SORT ==========\n";
-    cout << "Nanoseconds  : " << nanoMax << " ns\n";
-    cout << "Microseconds : " << microMax << " us\n";
+
+    cout << "Sorted array: ";
+    for (int x : maxHeapArray)
+        cout << x << " ";
+
+    cout << "\nNanoseconds  : " << nanoMax << " ns";
+    cout << "\nMicroseconds : " << microMax << " us\n";
 
     cout << "\n========== MIN HEAP SORT ==========\n";
-    cout << "Nanoseconds  : " << nanoMin << " ns\n";
-    cout << "Microseconds : " << microMin << " us\n";
+
+    cout << "Sorted array: ";
+    for (int x : minHeapArray)
+        cout << x << " ";
+
+    cout << "\nNanoseconds  : " << nanoMin << " ns";
+    cout << "\nMicroseconds : " << microMin << " us\n";
 
     return 0;
 }
