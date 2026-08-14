@@ -139,3 +139,18 @@ int main()
 
     return 0;
 }
+
+
+
+
+
+
+
+
+Conclusion:
+Heap sort uses a heap data structure to repeatedly select the largest or smallest element. It provides guaranteed O(n log n) performance and does not require extra array space.
+
+Best: O(n log n)
+Average: O(n log n)
+Worst: O(n log n)
+Space: O(1)
